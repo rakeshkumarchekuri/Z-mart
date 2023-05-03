@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			eShopping
+		</title>
+		
+		    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Payment</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		
+	</head>
+	<body>
+	
+	<style>
+		h3 {
+			font-style: italic;
+			color: red;
+		}
+		table{
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        th, td{
+            padding: 10px 20px;
+            border: 1px solid #000;
+        }
+		.nav-link:hover {
+		background-color: #ccc;
+	  }
+	  .card {
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		padding: 20px;
+		margin: 20px auto;
+		width: 50%;
+	}
+	</style>
+		<div class="container-fluid">
+    	<div class="row justify-content-center" style="cursor: pointer;">
+			<div class="col-auto">
+				<h3>eShopping</h3>
+			</div>
+			<div class="col" >
+				<div class="text-right">
+					<h3 style='cursor:pointer;'>{{user_name}}</h3>
+				</div>
+			</div>
+		</div>
+	  </div>
+	<br>
+		
+	<nav class="nav nav-tabs"> 
+  <form method="post" action='/prod_catalog/'>
+    {% csrf_token %}
+    <button class="nav-link" href="#" >Products Catalog</button>
+	<input type='hidden' name='user_name1' value="{{user_name}}">
+</form>
+  
+  <form method="post" action='/upld_new/'>
+    {% csrf_token %}
+    <button class="nav-link" href="#" >Upload New Products</button>
+</form>
+  <form method="post" action='/Login/'>
+    {% csrf_token %}
+    <button class="nav-link" href="#" >Logout</button>
+</form>
+</nav>
+	<br>
+
+	
+	<form method="post" enctype="multipart/form-data" action='/upload_file/'>
+		{% csrf_token %}
+	<div style='text-align: center;' class='card'>
+	<h3 >Upload New item to the database</h3><br><br>
+	<label>Enter the name of Item:
+	<input type='text' id='item_name' name='item_name' placeholder='Enter the Item Name'><br><br></label>
+	<label>Select any one Category from the 3 lists given:<br>
+	<select name="category1" id="category1">
+	  <option value="select">Men</option>
+	  <optgroup label="Men">
+	  <optgroup label="Top Wear">
+      <option value="T Shirt">T Shirt</option>
+      <option value="Casual Shirt">Casual Shirt</option>
+	  <option value="Formal Shirt">Men Sweaters</option>
+	  <option value="Suits">Suits</option>
+	  <option value="Jackets">Jackets</option>
+	  <option value="Formal Shirt">Formal Shirt</option>
+	  </optgroup>
+    </optgroup>
+    <optgroup label="Indian and Festive Wear">
+      <option value="Kurtas">Men Kurtas</option>
+      <option value="Sherwanis">Sherwanis</option>
+	  <option value="Dhothis">Dhothis</option>
+    </optgroup>
+	<optgroup label="Bottom Wear">
+      <option value="Jeans">Men Jeans</option>
+      <option value="Track Pants">Track Pants</option>
+	  <option value="Boxers">Boxers</option>
+	  <option value="Shorts">Shorts</option>
+    </optgroup>
+	<optgroup label="Foot Wear">
+      <option value="Shoes">Shoes</option>
+      <option value="Flip Flops">Flip Flops</option>
+	  <option value="Sandals">Sandals</option>
+	  <option value="Socks">Men Socks</option>
+    </optgroup>
+  </select>
+  <select name="category2" id="category2">
+	  <option value="select">Women</option>
+	  <optgroup label="Women">
+	  <optgroup label="Fusion Wear">
+      <option value="Sarees">Sarees</option>
+      <option value="Kurtas2">Women Kurtas</option>
+	  <option value="Leggings_Churidars">Leggings & Churidars</option>
+	  <option value="Skirts">Skirts</option>
+	  <option value="Lehanga">Lehenga</option>
+	  <option value="Dupattas">Dupattas</option>
+	  </optgroup>
+    </optgroup>
+    <optgroup label="Western Wear">
+      <option value="dresses">Women Dresses</option>
+      <option value="Tops">Women Tops</option>
+	  <option value="Sweaters2">Women Sweaters</option>
+    </optgroup>
+	<optgroup label="Beauty and Personal Care">
+      <option value="Makeup">Makeup</option>
+      <option value="Skin care">Skin Care</option>
+	  <option value="Lipsticks">Lipsticks</option>
+	  <option value="Fragrences">Fragrences</option>
+    </optgroup>
+	<optgroup label="Foot Wear">
+      <option value="Casual Shoes">Casual Shoes</option>
+      <option value="Flats">Flats</option>
+	  <option value="Heels">Heels</option>
+	  <option value="Sports Shoes">Women Sports Shoes</option>
+    </optgroup>
+  </select>
+  <select name="category3" id="category3">
+	  <option value="select">Kids</option>
+	  <optgroup label="Kids">
+	  <optgroup label="Infants">
+      <option value="Body Suites">Body Suites
+	  </option>
+      <option value="Dresses3">Kids Dresses</option>
+	  <option value="Winter Wear">Winter Wear</option>
+	  <option value="Inner Wear">Inner Wear</option>
+	  <option value="Tshirts3">Tshirts</option>
+	  <option value="Rompers">Rompers</option>
+	  </optgroup>
+    </optgroup>
+    <optgroup label="Boys Clothing">
+      <option value="Shirts3">Shirts</option>
+      <option value="Ethnic Wear">Ethnic Wear</option>
+	  <option value="Jeans3">Jeans</option>
+	  <option value="Sweaters3">Kids Sweaters</option>
+    </optgroup>
+	<optgroup label="Girls Clothing">
+      <option value="Tops3">Tops</option>
+      <option value="TShirt3">TShirt</option>
+	  <option value="Dresses3">Dresses</option>
+	  <option value="Party wear3">Party wear</option>
+    </optgroup>
+	<optgroup label="Foot Wear">
+      <option value="School Shoes">School Shoes</option>
+      <option value="Sports Shoes3">Sports Shoes</option>
+	  <option value="Socks3">Socks</option>
+    </optgroup>
+  </select><br><br></label>
+  <label>Enter the Price:
+  <input type='text' id='item_price' name='item_price' placeholder='Enter the Item Price in $'>
+  <br><br></label>
+   <label>Enter the Brand name:
+  <input type='text' id='item_Brand' name='item_brand' placeholder='Enter the Item Brand'>
+  <br><br></label>
+    <label>Mention the Size of item:
+  <input type='text' id='item_size' name='item_size' placeholder='Size either XS,S,M,L,XL'>
+  <br><br></label>
+    <label>Enter the Description:
+  <input type='text' id='item_des' name='item_des' placeholder='Enter the Item description'>
+    <br><br></label>
+    <label>Total number of items:
+  <input type='text' id='item_tot' name='item_tot' placeholder='Number of Items in Catalog'>
+  <br><br></label>
+    <label>Delivery in how many days:
+  <input type='text' id='item_del' name='item_del' placeholder='Specify in how many days item will be delivered'>
+<br><br><br></label>
+	<b><label> Choose the file from your device to Upload to the Application:</label></b>
+	<input type="file" name="myfile"><br><br>
+	<b><label> Click on Upload button so the item will directly upload to the database:</b>
+	<button type="submit">Upload</button></label>
+	<input type='text' style='visibility:hidden;top:1%' id='admn_name' name='admn_name' value='{{user_name}}'></input>
+	</form>
+	</div>
+  
+	<form action='/reload_hmpg_aft_login/' id='reload_hmpg_aft_login' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		
+	</form>
+	{% load static %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/addons/p5.dom.js"></script>		
+			
+	<script>
+		function reload_homepage(){
+			document.getElementById('reload_hmpg_aft_login').submit();
+		}
+		var update_text_files=function(event){
+			document.getElementById('get_files').value=document.getElementById('file1').value;
+			var image = document.getElementById('output');
+			image.src = URL.createObjectURL(event.target.files[0]);
+			//document.getElementById('get_files').value=document.getElementById('output').src;
+		}
+		/*function update_text_files(){
+			document.getElementById('get_files').value=document.getElementById('file1').value;
+			var input = document.getElementById("get_files");
+			var fReader = new FileReader();
+			fReader.readAsDataURL(input.files[0]);
+			fReader.onloadend = function(event){
+				var img = document.getElementById("img_display");
+				img.src = event.target.result;
+			}
+		}*/
+		var i = 0;
+		var tot_no_of_products=parseInt(document.getElementById('tot_no_products').textContent);
+		for(i=tot_no_of_products+1;i<=12;i++){
+			var rm_str="Remove_if_Empty"+i;
+			var obj= document.getElementById(rm_str);
+			obj.remove();
+		}
+	</script>
+	
+	</body>
+</html>

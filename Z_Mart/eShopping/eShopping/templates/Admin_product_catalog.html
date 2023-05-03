@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			eShopping
+		</title>
+		
+		<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Payment</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		
+	</head>
+	<body>
+	
+	<style>
+				h3 {
+			font-style: italic;
+			color: red;
+		}
+		table{
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        th, td{
+            padding: 10px 20px;
+            border: 1px solid #000;
+        }
+		.nav-link:hover {
+		background-color: #ccc;
+	  }
+	  /* Style the label */
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Style the select */
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #555;
+  background-color: #fff;
+  background-image: linear-gradient(to bottom, #fff, #f2f2f2);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Style the select when it's focused */
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(66, 139, 202, 0.5);
+}
+
+/* Style the select when an option is hovered */
+select option:hover {
+  background-color: #66b3ff;
+  color: #fff;
+}
+
+	</style>
+	<div class="container-fluid">
+    	<div class="row justify-content-center" style="cursor: pointer;">
+			<div class="col-auto">
+				<h3>eShopping</h3>
+			</div>
+			<div class="col" >
+				<div class="text-right">
+					<h3 style='cursor:pointer;'>{{user_name}}</h3>
+				</div>
+			</div>
+		</div>
+	  </div>
+	<br>
+		<nav class="nav nav-tabs"> 
+  <form method="post" action='/prod_catalog/'>
+    {% csrf_token %}
+    <button class="nav-link" href="#" >Products Catalog</button>
+	<input type='hidden' name='user_name1' value="{{user_name}}">
+</form>
+  
+  <form method="post" action='/upld_new/'>
+    {% csrf_token %}
+    <input type='hidden' name='user_name1' value="{{user_name}}">
+	<button class="nav-link" href="#" >Upload New Products</button>
+</form>
+  <form method="post" action='/Login/'>
+    {% csrf_token %}
+    <button class="nav-link" href="#" >Logout</button>
+</form>
+</nav>
+	
+	
+	<h3>{{done_stat}}</h3>
+	<h3>Product Catalog - Edit or Delete Products:</h3><br>
+	<form action='/prod_cat/' id='prod_cat' method='post'>
+	{% csrf_token %}
+	<select id='sel_ed_del'>
+		<option>Edit</option>
+		<option>Delete</option>
+	</select><br><br>
+	<h3>{{status}}</h3>
+	<br>
+	<div id="table-container"></div><br><br>
+	<input id='submit1' onclick='Sub_edit_delete();' type='text' name='submit1' style='cursor:pointer;background-color:lightgrey' value ='Submit' readonly></button>
+	<input type='hidden' id='all_data_ed_del' name='all_data_ed_del'></input>
+	<input type='hidden' name='user_name1' value="{{user_name}}">
+	</form>
+	
+	
+	<h2 id='tot_no_items' style='visibility:hidden;'>{{total_no_items}}</h2>
+	<input type='hidden' id='items_val' value='{{items_val}}'></input>
+	
+	<script>
+	const items_val=document.getElementById('items_val').value;
+	const items = JSON.parse(items_val);
+	//console.log(items);
+	//items=JSON.parse(items);
+	console.log(items);
+		// Create a new table element
+		const table = document.createElement("table");
+
+		// Create a header row
+		const headerRow = document.createElement("tr");
+
+		// Create the header cells and add them to the header row
+		const headers = ["item_no", "item_name", "Department", "Brand", "Size", "Price", "Description", "Items_Available", "Items_Delivery_Days","Select"];
+		headers.forEach(headerText => {
+			const header = document.createElement("th");
+			header.appendChild(document.createTextNode(headerText));
+			headerRow.appendChild(header);
+		});
+
+		// Add the header row to the table
+		table.appendChild(headerRow);
+
+		// Create a row for each item and add it to the table
+		items.forEach(item => {
+			const row = document.createElement("tr");
+			var edit_opt=item.item_no;
+			var present_edit_opt=item.item_no;
+			// Create the cells for the item data and add them to the row
+			Object.entries(item).forEach(([key,value]) => {
+				const cell = document.createElement("td");
+				if(edit_opt==value){
+					cell.appendChild(document.createTextNode(value));
+					cell.setAttribute("contentEditable", "false");
+					cell.setAttribute("id", "item_no_"+edit_opt);					
+					edit_opt="eShopping disable edit";
+				}
+				else{
+					cell.appendChild(document.createTextNode(value));
+					cell.setAttribute("id", key+present_edit_opt);
+					cell.setAttribute("contentEditable", "true"); // Allow the user to edit the cell
+				}
+				row.appendChild(cell);
+			});
+			const checkboxCell = document.createElement("td");
+			const checkbox = document.createElement("input");
+			checkbox.type = "checkbox";
+			checkbox.id="chck"+present_edit_opt;
+			checkboxCell.appendChild(checkbox);
+			row.appendChild(checkboxCell);
+			// Add the row to the table
+			table.appendChild(row);
+		});
+
+		// Add the table to the page
+		document.getElementById("table-container").appendChild(table);
+		function Sub_edit_delete()
+		{
+			var tot_no_items=parseInt(document.getElementById('tot_no_items').textContent);
+			var str_data=document.getElementById('sel_ed_del').value;
+			console.log(str_data);
+			var item_no_str=''
+			var item_nm_str=''
+			var dept_str=''
+			var brnd_str=''
+			var size_str=''
+			var price_str=''
+			var desc_str=''
+			var avail_str=''
+			var no_days_deliver_str=''
+			for (var i = 1; i < table.rows.length; i++) {
+				console.log('chck'+table.rows[i].cells[0].innerHTML);
+				if(document.getElementById('chck'+table.rows[i].cells[0].innerHTML).checked == true){
+					item_no_str=table.rows[i].cells[0].innerHTML;
+					item_nm_str=table.rows[i].cells[1].innerHTML;
+					dept_str=table.rows[i].cells[2].innerHTML;
+					brnd_str=table.rows[i].cells[3].innerHTML;
+					size_str=table.rows[i].cells[4].innerHTML;
+					price_str=table.rows[i].cells[5].innerHTML;
+					desc_str=table.rows[i].cells[6].innerHTML;
+					avail_str=table.rows[i].cells[7].innerHTML;
+					no_days_deliver_str=table.rows[i].cells[8].innerHTML;
+					str_data=str_data+',('+item_no_str+','+item_nm_str+','+dept_str+','+brnd_str+','+size_str+','+price_str+','+desc_str+','+avail_str+','+no_days_deliver_str;
+				}
+			}
+			document.getElementById('all_data_ed_del').value=str_data+',';
+			document.getElementById('prod_cat').submit();
+		}
+	</script>
+	
+	</body>
+</html>

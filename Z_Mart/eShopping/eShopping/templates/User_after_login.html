@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			eShopping
+		</title>
+		
+		<!--<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>-->
+		
+	</head>
+	<body>
+	
+	<style>
+		.grow {
+			height: 6%;
+			right:10%;
+			width: 10%;
+			top:0%;
+			position: absolute;
+			text-align: left;
+			overflow: hidden;
+			transition: 0.2s;
+		}
+		.grow:hover {
+			height: 35%;
+			width: 15%;
+		}
+		.right-hover:hover{
+			color: grey;
+		}
+		.categories_hover{
+			position:absolute;
+			left:22%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_hover:hover{
+			
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.categories_women_hover{
+			position:absolute;
+			left:29%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_women_hover:hover{
+			
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.categories_kids_hover{
+			position:absolute;
+			left:38%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_kids_hover:hover{
+			
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.hover_categories:hover{
+			color:black;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		.products_view{
+			width:20%;
+			height:40%;
+			border-radius:10px;
+			border-color:black;
+			background-color:red;
+			position:absolute;
+		}
+	</style>
+	<div onclick='reload_homepage();' style='cursor:pointer;'>
+		<h3 style='font-style:italic;color:red;'>eShopping</h3>
+		<p style='font-size:10px;top:5%;position:absolute;color:orange;'>Fashion Store </p>
+	</div>
+	<div class='grow'>
+	<form action='/Logout/' method='post'>
+		{% csrf_token %}
+		<b><p>{{user_name}}</p></b>
+		<br>
+		<button class='right-hover' style='font:20;width:60%;height:40%;border-color:white;cursor:pointer;'>Logout</button>
+	</form>
+		<form action='/Address/' method='post' >
+		{% csrf_token %}
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Saved Addresses</button>
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	</form>
+	
+	<form action='/Orders_Login/' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Orders</button>
+	</form>
+	</div>
+	<br>
+	
+	<form action='/open_cart/' id='open_cart' method='post'>
+	{% csrf_token %}
+	<div id='cart' name='cart' style="position:absolute:top:0%;right:1%;background-color:white;width:10%;height:10%;">
+		{% load static %}
+		<img src='{% static "shopping-cart-logo.jpg" %}' onclick="document.getElementById('open_cart').submit()" style='position:absolute;top:1%;height:10%;right:10%;cursor:pointer;'></img>
+		<h6 style='position:absolute;top:0%;height:10%;right:10.5%;cursor:pointer;color:red;' id='cart_val' name='cart_val'>0</h6>
+		<input type='text' id='cart_click'  style='visibility:hidden' name='cart_click'></input>
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	</div>
+	</form>
+	
+	<hr>
+	<form action='/Browse/' id='browse1' method='post' style='position:absolute;right:40%;top:4%;'>
+		{% csrf_token %}
+		<input type='text' id='search1' name='search1' style='font:40;border-radius: 7px;width:200%;height:40px;' placeholder='search'>
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	</form>
+	
+	<h6 id='tot_no_products' style='visibility:hidden'>{{total_no_products}}</h6>
+	
+	<div id='Remove_if_Empty1'>
+		{% csrf_token %}
+		<div class='products_view' id='last_clone' >
+			{% load static %}
+			<!--<img id='Remove_if_Empty_div_1' src='{% static item_path_1 %}' style="width:100%;height:100%;"></img>-->
+			<img id='Remove_if_Empty_div_1' src='{% static "Men/Top_Wear/Tshirts/MenTshirt150620221.PNG" %}' style="width:100%;height:100%;"></img>
+			<!--<img id='Remove_if_Empty_div_1' src='{{item_path_1}}' style="width:100%;height:100%;"></img>-->
+		</div>
+		<h3 id='Remove_if_Empty_h3_1' style='bottom:26%;position:absolute;'>{{product_no_1}}</h3>
+		<h4 id='Remove_if_Empty_h4_1' style='bottom:22%;position:absolute;'>{{price_1}}</h4>
+		<input type='text' id='cart1' name='cart1' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:12%;cursor:pointer;height:4%;' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty2'>
+		{% csrf_token %}
+		<div class='products_view' style='left:25%;'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_2' src='{% static "Men/Top_Wear/Casual/Mencasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_2' style='bottom:26%;position:absolute;left:26%;'>{{product_no_2}}</h3>
+		<h4 id='Remove_if_Empty_h4_2' style='bottom:22%;position:absolute;left:26%;'>{{price_2}}</h4>
+		<input type='text' id='cart2' name='cart2' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;color:white;border-radius:5px;bottom:24%;left:40%;cursor:pointer;height:4%;width:6%' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty3'>
+		{% csrf_token %}
+		<div class='products_view' style='left:50%;'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_3' src='{% static "MnFormal170620223.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_3' style='bottom:26%;position:absolute;left:51%;'>{{product_no_3}}</h3>
+		<h4 id='Remove_if_Empty_h4_3' style='bottom:22%;position:absolute;left:51%;'>{{price_3}}</h4>
+		<input type='text' id='cart3' name='cart3' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;color:white;border-radius:5px;width:6%;bottom:24%;left:63%;cursor:pointer;height:4%;' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty4'>
+		<div class='products_view' style='left:75%;'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_4' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_4' style='bottom:26%;position:absolute;left:76%;'>{{product_no_4}}</h3>
+		<h4 id='Remove_if_Empty_h4_4' style='bottom:22%;position:absolute;left:76%;'>{{price_4}}</h4>
+		<input type='text' id='cart4' name='cart4' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;color:white;border-radius:5px;width:6%;bottom:24%;left:87%;cursor:pointer;height:4%;' value='Add to Cart' readonly>
+	</div>
+	
+	<div id='Remove_if_Empty5'>
+		<div class='products_view' style='top:80%;position:absolute'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_5' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_5' style='top:120%;position:absolute;'>{{product_no_5}}</h3>
+		<h4 id='Remove_if_Empty_h4_5' style='top:124%;position:absolute;'>{{price_5}}</h4>
+		<input type='text' id='cart5' name='cart5' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:12%;cursor:pointer;height:4%;top:127%' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty6'>
+		<div class='products_view' style='top:80%; position:absolute;left:25%'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_6' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_6' style='top:120%;position:absolute;left:26%;'>{{product_no_6}}</h3>
+		<h4 id='Remove_if_Empty_h4_6' style='top:124%;position:absolute;left:26%;'>{{price_6}}</h4>
+		<input type='text' id='cart6' name='cart6' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;color:white;border-radius:5px;bottom:24%;left:40%;cursor:pointer;height:4%;width:6%;top:127%;' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty7'>
+		<div class='products_view' style='top:80%;position:absolute;left:50%;'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_7' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_7' style='top:120%;position:absolute;left:51%;'>{{product_no_7}}</h3>
+		<h4 id='Remove_if_Empty_h4_7' style='top:124%;position:absolute;left:51%;'>{{price_7}}</h4>
+		<input type='text' id='cart7' name='cart7' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:63%;cursor:pointer;height:4%;top:127%' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty8'>
+		<div class='products_view' style='top:80%;position:absolute;left:75%;'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_8' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_8' style='top:120%;position:absolute;left:76%;'>{{product_no_8}}</h3>
+		<h4 id='Remove_if_Empty_h4_8' style='top:124%;position:absolute;left:76%;'>{{price_8}}</h4>
+		<input type='text' id='cart8' name='cart8' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:87%;cursor:pointer;height:4%;top:127%' value='Add to Cart' readonly>
+	</div>
+	
+	<div id='Remove_if_Empty9'>
+		<div class='products_view' style='top:135%;position:absolute'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_9' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_9' style='top:175%;position:absolute;'>{{product_no_9}}</h3>
+		<h4 id='Remove_if_Empty_h4_9' style='top:179%;position:absolute;'>{{price_9}}</h4>
+		<input type='text' id='cart9' name='cart9' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:12%;cursor:pointer;height:4%;top:182%' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty10'>
+		<div class='products_view' style='top:135%; position:absolute;left:25%'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_10' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3  id='Remove_if_Empty_h3_10' style='top:175%;position:absolute;left:26%;'>{{product_no_10}}</h3>
+		<h4 id='Remove_if_Empty_h4_10' style='top:179%;position:absolute;left:26%;'>{{price_10}}</h4>
+		<input type='text' id='cart10' name='cart10' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:40%;cursor:pointer;height:4%;top:182%' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty11'>
+		<div class='products_view' style='top:135%;position:absolute;left:50%;'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_11' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_11' style='top:175%;position:absolute;left:51%;'>{{product_no_11}}</h3>
+		<h4 id='Remove_if_Empty_h4_11' style='top:179%;position:absolute;left:51%;'>{{price_11}}</h4>
+		<input type='text' id='cart11' name='cart11' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:63%;cursor:pointer;height:4%;top:182%' value='Add to Cart' readonly>
+	</div>
+	<div id='Remove_if_Empty12'>
+		<div class='products_view' style='top:135%;position:absolute;left:75%;'>
+		{% load static %}
+			<img id='Remove_if_Empty_div_12' src='{% static "Mncasual150620222.PNG" %}' style="width:100%;height:100%;"></img>
+		</div>
+		<h3 id='Remove_if_Empty_h3_12' style='top:175%;position:absolute;left:76%;'>{{product_no_12}}</h3>
+		<h4 id='Remove_if_Empty_h4_12' style='top:179%;position:absolute;left:76%;'>{{price_12}}</h4>
+		<input type='text' id='cart12' name='cart12' onclick='add_to_cart(id);' style='position:absolute;background-color:lightblue;width:6%;color:white;border-radius:5px;bottom:24%;left:87%;cursor:pointer;height:4%;top:182%' value='Add to Cart' readonly>
+	</div>
+	<textarea rows='100' cols='60' id='t1' style="position:absolute;top:1%;visibility:hidden;">{{item_paths}}</textarea>
+	<textarea rows='100' cols='60' id='t2' style="position:absolute;top:1%;visibility:hidden;">Hi</textarea>
+	<div id='Remove_if_Empty' style='top:200%;background-color:white;'>
+	
+	</div>
+	
+	
+	
+	<form action='/Browse2/' id='browse2' method='post'>
+	{% csrf_token %}
+		<div class='categories_hover'>
+		<h2>Men</h2>
+		<p class='hover_categories' style='color:red' id='TopWear' onclick='browse2(id);'>Top Wear</p>
+		<p class='hover_categories' id='mentshirt' onclick='browse2(id);'>T-Shirts</p>
+		<p class='hover_categories' id='mencasual' onclick='browse2(id);'>Casual Shirts</p>
+		<p class='hover_categories' id='menformal' onclick='browse2(id);'>Formal Shirts</p>
+		<p class='hover_categories' id='mensweaters' onclick='browse2(id);'>Sweaters</p>
+		<p class='hover_categories' id='mensuits' onclick='browse2(id);'>Suits</p>
+		<p class='hover_categories' id='menjacket' onclick='browse2(id);'>Jackets</p>
+		<hr>
+		<p class='hover_categories' style='color:red' id='festive' onclick='browse2(id);'>Indian & Festive wear</p>
+		<p class='hover_categories' id='menkurtas' onclick='browse2(id);'>Kurtas</p>
+		<p class='hover_categories' id='mensher' onclick='browse2(id);'>Sherwanis</p>
+		<p class='hover_categories' id='mendhotis' onclick='browse2(id);'>Dhotis</p>
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:40%;width:30%;' id='botWear' onclick='browse2(id);'>Bottom Wear</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:40%;width:30%;' id='menjeans' onclick='browse2(id);'>Jeans</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:40%;width:30%;' id='mentracks' onclick='browse2(id);'>Track Pants</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:40%;width:30%;' id='menshorts' onclick='browse2(id);'>Shorts</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:40%;width:30%;' id='menboxers' onclick='browse2(id);'>Boxers</p>
+		</div>
+		
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:75%;width:30%;' id='menfoot' onclick='browse2(id);'>Foot Wear</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:75%;width:30%;' id='menshoes' onclick='browse2(id);'>Shoes</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:75%;width:30%;' id='menflips' onclick='browse2(id);'>Flip Flops</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:75%;width:30%;' id='mensock' onclick='browse2(id);'>Socks</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:75%;width:30%;' id='mensand' onclick='browse2(id);'>Sandals</p>
+		</div>
+	</div>
+	
+	<div class='categories_women_hover'>
+		<h2>Women</h2>
+		<p class='hover_categories' style='color:red' id='fushion' onclick='browse2(id);'>Fusion Wear</p>
+		<p class='hover_categories' id='sarees' onclick='browse2(id);'>Sarees</p>
+		<p class='hover_categories' id='womkurtas' onclick='browse2(id);'>Kurtas</p>
+		<p class='hover_categories' id='leg_chud' onclick='browse2(id);'>Leggings & Churidars</p>
+		<p class='hover_categories' id='wonskirts' onclick='browse2(id);'>Skirts</p>
+		<p class='hover_categories' id='lehenga' onclick='browse2(id);'>Lehenga</p>
+		<p class='hover_categories' id='dhuppatas' onclick='browse2(id);'>Dupattas</p>
+		<hr>
+		<p class='hover_categories' style='color:red' id='westernWear' onclick='browse2(id);'>Western Wear</p>
+		<p class='hover_categories' id='womdresses' onclick='browse2(id);'>Dresses</p>
+		<p class='hover_categories' id='womTop' onclick='browse2(id);'>Tops</p>
+		<p class='hover_categories' id='womsweater' onclick='browse2(id);'>Sweaters</p>
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:40%;width:30%;' id='bty_per' onclick='browse2(id);'>Beauty & Personal Care</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:40%;width:30%;' id='mkup' onclick='browse2(id);'>Make up</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:40%;width:30%;' id='skcare' onclick='browse2(id);'>Skin care</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:40%;width:30%;' id='lpstck' onclick='browse2(id);'>Lipstick</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:40%;width:30%;' id='fragrence' onclick='browse2(id);'>Fragrences</p>
+		</div>
+		
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:75%;width:30%;' id='womfootWear' onclick='browse2(id);'>Foot Wear</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:75%;width:30%;' id='woncasualshoes' onclick='browse2(id);'>Casual Shoes</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:75%;width:30%;' id='womflats' onclick='browse2(id);'>Flats</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:75%;width:30%;' id='heels' onclick='browse2(id);'>Heels</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:75%;width:30%;' id='sportsshoes' onclick='browse2(id);'>Sports shoes</p>
+		</div>
+	</div>
+	
+	<div class='categories_kids_hover'>
+		<h2>Kids</h2>
+		<p class='hover_categories' style='color:red' id='infant' onclick='browse2(id);'>Infants</p>
+		<p class='hover_categories' id='bodysuits' onclick='browse2(id);'>Body Suites</p>
+		<p class='hover_categories' id='kiddress' onclick='browse2(id);'>Dresses</p>
+		<p class='hover_categories' id='kidwint' onclick='browse2(id);'>Winter Wear</p>
+		<p class='hover_categories' id='kidinnerWear' onclick='browse2(id);'>Inner Wear</p>
+		<p class='hover_categories' id='kidtshrt' onclick='browse2(id);'>Tshirts</p>
+		<p class='hover_categories' id='romper' onclick='browse2(id);'>Rompers</p>
+		<hr>
+		<p class='hover_categories' style='color:red' id='kidftwr' onclick='browse2(id);'>Foot Wear</p>
+		<p class='hover_categories' id='scholshoes' onclick='browse2(id);'>School Shoes</p>
+		<p class='hover_categories' id='kidsocks' onclick='browse2(id);'>Socks</p>
+		<p class='hover_categories' id='kidsports' onclick='browse2(id);'>Sports Shoes</p>
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:40%;width:30%;' id='kidby' onclick='browse2(id);'>Boys Clothing</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:40%;width:30%;' id='kidboyshirts' onclick='browse2(id);'>Shirts</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:40%;width:30%;' id='botethnic' onclick='browse2(id);'>Ethnic Wear</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:40%;width:30%;' id='boyswetrs' onclick='browse2(id);'>Sweaters</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:40%;width:30%;' id='boyjens' onclick='browse2(id);'>Jeans</p>
+		</div>
+		
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:75%;width:30%;' id='kidgrlsclotng' onclick='browse2(id);'>Girls Clothing</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:75%;width:30%;' id='grlTop' onclick='browse2(id);'>Tops</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:75%;width:30%;' id='grltshrt' onclick='browse2(id);'>TShirts</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:75%;width:30%;' id='grldress' onclick='browse2(id);'>Dresses</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:75%;width:30%;' id='grlprtywear' onclick='browse2(id);'>Party wear</p>
+		</div>
+	</div>
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='srch_str_1' id='srch_str_1' ></input>
+	</form>
+	
+	<form action='/reload_hmpg_aft_login/' id='reload_hmpg_aft_login' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		
+	</form>
+	
+	<script>
+		function reload_homepage(){
+			document.getElementById('reload_hmpg_aft_login').submit();
+		}
+		function browse2(id){
+			//console.log(document.getElementById(id).innerHTML);
+			document.getElementById('srch_str_1').value=document.getElementById(id).innerHTML;
+			document.getElementById('browse2').submit();
+		}
+		function add_to_cart(id){
+			var thenum = id.replace( /^\D+/g, '');
+			var strng=document.getElementById('Remove_if_Empty_div_'+thenum.toString()).src;
+			document.getElementById('cart_click').value=document.getElementById('cart_click').value+strng+',';
+			console.log(document.getElementById('cart_click').value);
+			document.getElementById('cart_val').innerHTML=parseInt(document.getElementById('cart_val').innerHTML)+1;
+		}
+		var input = document.getElementById("search1");
+		input.addEventListener("keydown", function (e) {
+		if (e.key === "Enter") {  
+			document.getElementById('browse1').submit();
+		}
+		});
+		var str="";
+		var text_ar=(document.getElementById("t1").value).split(',');
+		//console.log(text_ar);
+		document.getElementById('Remove_if_Empty_div_1').src=text_ar[0];
+		document.getElementById('Remove_if_Empty_div_2').src=text_ar[1];
+		document.getElementById('Remove_if_Empty_div_3').src=text_ar[2];
+		document.getElementById('Remove_if_Empty_div_4').src=text_ar[3];
+		document.getElementById('Remove_if_Empty_div_5').src=text_ar[4];
+		document.getElementById('Remove_if_Empty_div_6').src=text_ar[5];
+		document.getElementById('Remove_if_Empty_div_7').src=text_ar[6];
+		document.getElementById('Remove_if_Empty_div_8').src=text_ar[7];
+		document.getElementById('Remove_if_Empty_div_9').src=text_ar[8];
+		document.getElementById('Remove_if_Empty_div_10').src=text_ar[9];
+		document.getElementById('Remove_if_Empty_div_11').src=text_ar[10];
+		document.getElementById('Remove_if_Empty_div_12').src=text_ar[11];
+		//document.getElementById('Remove_if_Empty_div_1').src=text_ar[0];
+		/*
+		document.getElementById('Remove_if_Empty_div_1').src='{{item_path_1}}';
+		document.getElementById('Remove_if_Empty_div_2').src='{{item_path_2}}';
+		document.getElementById('Remove_if_Empty_div_3').src='{{item_path_3}}';
+		document.getElementById('Remove_if_Empty_div_4').src='{{item_path_4}}';
+		document.getElementById('Remove_if_Empty_div_5').src='{{item_path_5}}';
+		document.getElementById('Remove_if_Empty_div_6').src='{{item_path_6}}';
+		document.getElementById('Remove_if_Empty_div_7').src='{{item_path_7}}';
+		document.getElementById('Remove_if_Empty_div_8').src='{{item_path_8}}';
+		document.getElementById('Remove_if_Empty_div_9').src='{{item_path_9}}';
+		document.getElementById('Remove_if_Empty_div_10').src='{{item_path_10}}';
+		document.getElementById('Remove_if_Empty_div_11').src='{{item_path_11}}';
+		document.getElementById('Remove_if_Empty_div_12').src='{{item_path_12}}';
+		*/
+		
+		document.getElementById('t2').value=text_ar[8];
+		var tot_products=parseInt(document.getElementById('tot_no_products').textContent);
+
+		const elem = document.getElementById('Remove_if_Empty');
+		//set n to the value form the previous page
+		const clone = elem.cloneNode(true);
+		var i=13;
+		var div_top=-155;
+		var div_h3=400;
+		var div_h4=400;
+		var div_cart=10;
+		while(i<=tot_products) {
+			// Create a copy of it
+			div_top=div_top+155;
+			div_h3=div_top+100;
+			div_h4=div_h3+15;
+			div_cart=div_h4+3;
+			//div_h3=div_h3+125;
+			//div_h4=div_h4+140;
+			// Update the ID
+			
+			const elem1 = document.getElementById('Remove_if_Empty_div_9');
+			const elem2 = document.getElementById('Remove_if_Empty_h3_9');
+			const elem3 = document.getElementById('Remove_if_Empty_h4_9');
+			const elem13 = document.getElementById('cart9');
+			const clone1 = elem1.cloneNode(true);
+			const clone2 = elem2.cloneNode(true);
+			const clone3 = elem3.cloneNode(true);
+			const clone13 = elem13.cloneNode(true);
+			
+			const elem4 = document.getElementById('Remove_if_Empty_div_10');
+			const elem5 = document.getElementById('Remove_if_Empty_h3_10');
+			const elem6 = document.getElementById('Remove_if_Empty_h4_10');
+			const elem14 = document.getElementById('cart10');
+			const clone4 = elem4.cloneNode(true);
+			const clone5 = elem5.cloneNode(true);
+			const clone6 = elem6.cloneNode(true);
+			const clone14 = elem14.cloneNode(true);
+			
+			const elem7 = document.getElementById('Remove_if_Empty_div_11');
+			const elem8 = document.getElementById('Remove_if_Empty_h3_11');
+			const elem9 = document.getElementById('Remove_if_Empty_h4_11');
+			const elem15 = document.getElementById('cart11');
+			const clone7 = elem7.cloneNode(true);
+			const clone8 = elem8.cloneNode(true);
+			const clone9 = elem9.cloneNode(true);
+			const clone15 = elem15.cloneNode(true);
+			
+			const elem10 = document.getElementById('Remove_if_Empty_div_12');
+			const elem11 = document.getElementById('Remove_if_Empty_h3_12');
+			const elem12 = document.getElementById('Remove_if_Empty_h4_12');
+			const elem16 = document.getElementById('cart12');
+			const clone10 = elem10.cloneNode(true);
+			const clone11 = elem11.cloneNode(true);
+			const clone12 = elem12.cloneNode(true);
+			const clone16 = elem16.cloneNode(true);
+			
+			clone.id = "Remove_if_Empty"+i.toString();
+			clone1.id = "Remove_if_Empty_div_"+i.toString();
+			clone2.id = "Remove_if_Empty_h3_"+i.toString();
+			clone3.id = "Remove_if_Empty_h4_"+i.toString();
+			clone13.id = "cart"+i.toString();
+			
+			clone4.id = "Remove_if_Empty_div_"+(i+1).toString();
+			clone5.id = "Remove_if_Empty_h3_"+(i+1).toString();
+			clone6.id = "Remove_if_Empty_h4_"+(i+1).toString();
+			clone14.id = "cart"+(i+1).toString();
+			
+			clone7.id = "Remove_if_Empty_div_"+(i+2).toString();
+			clone8.id = "Remove_if_Empty_h3_"+(i+2).toString();
+			clone9.id = "Remove_if_Empty_h4_"+(i+2).toString();
+			clone15.id = "cart"+(i+2).toString();
+			
+			clone10.id = "Remove_if_Empty_div_"+(i+3).toString();
+			clone11.id = "Remove_if_Empty_h3_"+(i+3).toString();
+			clone12.id = "Remove_if_Empty_h4_"+(i+3).toString();
+			clone16.id = "cart"+(i+3).toString();
+			// Inject it into the DOM
+			document.getElementById("Remove_if_Empty").appendChild(clone);
+			document.getElementById(clone.id).appendChild(clone1);
+			document.getElementById(clone.id).appendChild(clone2);
+			document.getElementById(clone.id).appendChild(clone3);
+			document.getElementById(clone.id).appendChild(clone13);
+			clone_div1="Remove_if_Empty_div_"+i.toString();
+			clone_h3="Remove_if_Empty_h3_"+i.toString();
+			clone_h4="Remove_if_Empty_h4_"+i.toString();
+			document.getElementById(clone_div1).style.left="0%";
+			document.getElementById(clone_h3).style.left="0%";
+			document.getElementById(clone_h4).style.left="0%";
+			document.getElementById(clone_div1).style.top=div_top+"%";
+			document.getElementById(clone_h3).style.top=div_h3+"%";
+			document.getElementById(clone_h4).style.top=div_h4+"%";
+			document.getElementById(clone13.id).style.top=div_cart+"%";
+			document.getElementById(clone13.id).style.width="30%";
+			document.getElementById(clone13.id).style.left="60%";
+			document.getElementById(clone13.id).style.height="10%";
+			document.getElementById(clone_div1).style.position="absolute";
+			str="{{item_path_"+i.toString();
+			str=str+"}}";
+			str=text_ar[i-1];
+			document.getElementById(clone_div1).src=str;
+			document.getElementById(clone.id).classList="products_view";
+			document.getElementById(clone_h3).style.width="100%";
+			//str="{% static '{{item_path_"+i.toString()
+			//str=str+"}}' %}";
+			//document.getElementById(clone_div1).src=str;
+			
+			if((i+1)<=tot_products){
+			clone.id = "Remove_if_Empty"+(i+1).toString();
+			document.getElementById("Remove_if_Empty").appendChild(clone);
+			document.getElementById(clone.id).appendChild(clone4);
+			document.getElementById(clone.id).appendChild(clone5);
+			document.getElementById(clone.id).appendChild(clone6);
+			document.getElementById(clone.id).appendChild(clone14);
+			document.getElementById(clone4.id).style.left="123%";
+			document.getElementById(clone5.id).style.left="125%";
+			document.getElementById(clone6.id).style.left="125%";
+			document.getElementById(clone4.id).style.top=div_top+"%";
+			document.getElementById(clone5.id).style.top=div_h3+"%";
+			document.getElementById(clone6.id).style.top=div_h4+"%";
+			document.getElementById(clone4.id).style.position="absolute";
+			document.getElementById(clone14.id).style.top=div_cart+"%";
+			document.getElementById(clone14.id).style.width="30%";
+			document.getElementById(clone14.id).style.left="190%";
+			document.getElementById(clone14.id).style.height="10%";
+			
+			str="{{item_path_"+(i+1).toString();
+			str=str+"}}";
+			str=text_ar[i];
+			document.getElementById(clone.id).src=str;
+			document.getElementById(clone.id).classList="products_view";
+			document.getElementById(clone5.id).style.width="100%";
+			}
+			
+			if((i+2)<=tot_products){
+			clone.id = "Remove_if_Empty"+(i+2).toString();
+			document.getElementById("Remove_if_Empty").appendChild(clone);
+			document.getElementById(clone.id).appendChild(clone7);
+			document.getElementById(clone.id).appendChild(clone8);
+			document.getElementById(clone.id).appendChild(clone9);
+			document.getElementById(clone.id).appendChild(clone15);
+			document.getElementById(clone7.id).style.left="247%";
+			document.getElementById(clone8.id).style.left="249%";
+			document.getElementById(clone9.id).style.left="249%";
+			document.getElementById(clone7.id).style.top=div_top+"%";
+			document.getElementById(clone8.id).style.top=div_h3+"%";
+			document.getElementById(clone9.id).style.top=div_h4+"%";
+			document.getElementById(clone7.id).style.position="absolute";
+			document.getElementById(clone15.id).style.top=div_cart+"%";
+			document.getElementById(clone15.id).style.width="30%";
+			document.getElementById(clone15.id).style.left="310%";
+			document.getElementById(clone15.id).style.height="10%";
+			str="{{item_path_"+(i+2).toString();
+			str=str+"}}";
+			str=text_ar[i+1];
+			document.getElementById(clone.id).src=str;
+			document.getElementById(clone.id).classList="products_view";
+			document.getElementById(clone8.id).style.width="100%";
+			}
+			if((i+3)<=tot_products){
+			clone.id = "Remove_if_Empty"+(i+3).toString();
+			document.getElementById("Remove_if_Empty").appendChild(clone);
+			document.getElementById(clone.id).appendChild(clone10);
+			document.getElementById(clone.id).appendChild(clone11);
+			document.getElementById(clone.id).appendChild(clone12);
+			document.getElementById(clone.id).appendChild(clone16);
+			document.getElementById(clone10.id).style.left="370%";
+			document.getElementById(clone11.id).style.left="372%";
+			document.getElementById(clone12.id).style.left="372%";
+			document.getElementById(clone10.id).style.top=div_top+"%";
+			document.getElementById(clone11.id).style.top=div_h3+"%";
+			document.getElementById(clone12.id).style.top=div_h4+"%";
+			document.getElementById(clone10.id).style.position="absolute";
+			document.getElementById(clone16.id).style.top=div_cart+"%";
+			document.getElementById(clone16.id).style.width="30%";
+			document.getElementById(clone16.id).style.left="430%";
+			document.getElementById(clone16.id).style.height="10%";
+			str="{{item_path_"+(i+3).toString();
+			str=str+"}}";
+			str=text_ar[i+2];
+			document.getElementById(clone.id).src=str;
+			document.getElementById(clone.id).classList="products_view";
+			document.getElementById(clone11.id).style.width="100%";
+			}
+			i=i+4;
+		}
+		var i = 0;
+		var tot_no_of_products=parseInt(document.getElementById('tot_no_products').textContent);
+		for(i=tot_no_of_products+1;i<=12;i++){
+			var rm_str="Remove_if_Empty"+i.toString();
+			var obj= document.getElementById(rm_str);
+			obj.remove();
+		}
+	</script>
+	
+	</body>
+</html>

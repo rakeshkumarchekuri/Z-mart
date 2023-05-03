@@ -1,0 +1,88 @@
+create database jarvis;
+use jarvis;
+
+create table user_login(
+username varchar(100) primary key,
+password varchar(100) not null,
+email_id varchar(100) not null,
+account_type varchar(10) not null,
+account_status varchar(100) not null
+);
+
+create table user_login_check_email(
+username varchar(100),
+otp varchar(10),
+foreign key(username) references user_login(username)
+);
+
+create table user_address(
+id integer primary key,
+username varchar(100),
+address_street varchar(50),
+address_apt varchar(10),
+address_city varchar(100),
+address_state varchar(100),
+address_pincode varchar(10),
+mobile_number varchar(20),
+foreign key(username) references user_login(username)
+);
+
+create table items(
+item_no integer primary key,
+item_name varchar(100),
+department_name varchar(100),
+item_path varchar(100),
+brand varchar(100),
+size varchar(10),
+price varchar(12),
+description varchar(1000),
+no_of_items_available varchar(100),
+no_of_days_item_deliver varchar(100)
+);
+
+create table usr_qry(
+usr_qry_id varchar(20),
+username varchar(20),
+user_qry varchar(100),
+foreign key(username) references user_login(username)
+);
+
+create table usr_feed_bck(
+username varchar(20),
+path varchar(100),
+feedback varchar(100)
+);
+
+
+create table shopping_cart(
+username varchar(20),
+item_name varchar(100),
+item_path varchar(100),
+item_price varchar(12),
+quantity varchar(10),
+no_of_days_item_deliver varchar(10),
+size varchar(10),
+foreign key(username) references user_login(username)
+);
+
+create table orders(
+order_id integer primary key,
+username varchar(20),
+item_name varchar(100),
+item_path varchar(100),
+item_price varchar(12),
+quantity varchar(10),
+no_of_days_item_deliver varchar(10),
+size varchar(10),
+status varchar(100),
+foreign key(username) references user_login(username)
+);
+
+
+
+
+
+
+
+
+

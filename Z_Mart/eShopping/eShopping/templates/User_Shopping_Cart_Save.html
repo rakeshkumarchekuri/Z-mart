@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			eShopping
+		</title>
+		
+		<!--<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>-->
+		
+	</head>
+	<body>
+	
+	<style>
+		.grow {
+			height: 6%;
+			right:10%;
+			width: 10%;
+			top:0%;
+			position: absolute;
+			text-align: left;
+			overflow: hidden;
+			transition: 0.2s;
+		}
+		.grow:hover {
+			height: 35%;
+			width: 15%;
+		}
+		.right-hover:hover{
+			color: grey;
+		}
+		.categories_hover{
+			position:absolute;
+			left:22%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_hover:hover{
+			top:14%;
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.categories_women_hover{
+			position:absolute;
+			left:29%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_women_hover:hover{
+			top:14%;
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.categories_kids_hover{
+			position:absolute;
+			left:38%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_kids_hover:hover{
+			top:14%;
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.hover_categories:hover{
+			color:black;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		.products_view{
+			width:20%;
+			height:40%;
+			border-radius:10px;
+			border-color:black;
+			background-color:red;
+			position:absolute;
+		}
+		.button {
+			background-color: #4CAF50; /* Green */
+			border: none;
+			color: green;
+			padding: 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+		}
+		
+		.button:hover {background-color: #3e8e41}
+		
+		.button:active {
+			background-color: #3e8e41;
+			box-shadow: 0 5px #666;
+			transform: translateY(4px);
+		}
+	</style>
+	<div onclick='reload_homepage();' style='cursor:pointer;'>
+		<h3 style='font-style:italic;color:red;'>eShopping</h3>
+		<p style='font-size:10px;top:5%;position:absolute;color:orange;'>Fashion Store </p>
+	</div>
+	
+	
+	
+	
+	<div class='grow'>
+	<form action='/Logout/' method='post'>
+		{% csrf_token %}
+		<b><p>{{user_name}}</p></b>
+		<br>
+		<button class='right-hover' style='font:20;width:60%;height:40%;border-color:white;cursor:pointer;'>Logout</button>
+	</form>
+		<form action='/Address/' method='post' >
+		{% csrf_token %}
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Saved Addresses</button>
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	</form>
+	<form action='/Aboutcmpy/' method='post' >
+		{% csrf_token %}
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Edit Profile</button>
+	</form>
+	<!--
+	<form action='/open_cart/' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Shopping Cart</button>
+	</form>
+	-->
+	<form action='/cart_Login/' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Orders</button>
+	</form>
+	</div>
+	<br>
+	<hr>
+	<form action='/Browse/' method='post' style='position:absolute;right:40%;top:4%;'>
+		{% csrf_token %}
+		<input type='text' style='font:40;border-radius: 7px;width:200%;height:40px' placeholder='search'></button></form>
+	
+	<br>
+	
+	
+	<div class='categories_hover'>
+		<h2>Men</h2>
+		<p class='hover_categories' style='color:red'>Top Wear</p>
+		<p class='hover_categories'>T-Shirts</p>
+		<p class='hover_categories'>Casual Shirts</p>
+		<p class='hover_categories'>Formal Shirts</p>
+		<p class='hover_categories'>Sweaters</p>
+		<p class='hover_categories'>Suits</p>
+		<p class='hover_categories'>Jackets</p>
+		<hr>
+		<p class='hover_categories' style='color:red'>Indian & Festive wear</p>
+		<p class='hover_categories'>Kurtas</p>
+		<p class='hover_categories'>Sherwanis</p>
+		<p class='hover_categories'>Dhotis</p>
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:40%;width:30%;'>Bottom Wear</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:40%;width:30%;'>Jeans</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:40%;width:30%;'>Track Pants</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:40%;width:30%;'>Shorts</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:40%;width:30%;'>Boxers</p>
+		</div>
+		
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:75%;width:30%;'>Foot Wear</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:75%;width:30%;'>Shoes</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:75%;width:30%;'>Flip Flops</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:75%;width:30%;'>Socks</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:75%;width:30%;'>Sandals</p>
+		</div>
+	</div>
+	
+	<div class='categories_women_hover'>
+		<h2>Women</h2>
+		<p class='hover_categories' style='color:red'>Fusion Wear</p>
+		<p class='hover_categories'>Sarees</p>
+		<p class='hover_categories'>Kurtas</p>
+		<p class='hover_categories'>Leggings & Churidars</p>
+		<p class='hover_categories'>Skirts</p>
+		<p class='hover_categories'>Lehenga</p>
+		<p class='hover_categories'>Dupattas</p>
+		<hr>
+		<p class='hover_categories' style='color:red'>Western Wear</p>
+		<p class='hover_categories'>Dresses</p>
+		<p class='hover_categories'>Tops</p>
+		<p class='hover_categories'>Sweaters</p>
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:40%;width:30%;'>Beauty & Personal Care</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:40%;width:30%;'>Make up</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:40%;width:30%;'>Skin care</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:40%;width:30%;'>Lipstick</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:40%;width:30%;'>Fragrences</p>
+		</div>
+		
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:75%;width:30%;'>Foot Wear</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:75%;width:30%;'>Casual Shoes</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:75%;width:30%;'>Flats</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:75%;width:30%;'>Heels</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:75%;width:30%;'>Sports shoes</p>
+		</div>
+	</div>
+	
+	<div class='categories_kids_hover'>
+		<h2>Kids</h2>
+		<p class='hover_categories' style='color:red'>Infants</p>
+		<p class='hover_categories'>Body Suites</p>
+		<p class='hover_categories'>Dresses</p>
+		<p class='hover_categories'>Winter Wear</p>
+		<p class='hover_categories'>Inner Wear</p>
+		<p class='hover_categories'>Tshirts</p>
+		<p class='hover_categories'>Rompers</p>
+		<hr>
+		<p class='hover_categories' style='color:red'>Foot Wear</p>
+		<p class='hover_categories'>School Shoes</p>
+		<p class='hover_categories'>Socks</p>
+		<p class='hover_categories'>Sports Shoes</p>
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:40%;width:30%;'>Boys Clothing</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:40%;width:30%;'>Shirts</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:40%;width:30%;'>Ethnic Wear</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:40%;width:30%;'>Sweaters</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:40%;width:30%;'>Jeans</p>
+		</div>
+		
+		<div>
+			<p class='hover_categories' style='color:red;position:absolute;top:70%;left:75%;width:30%;'>Girls Clothing</p>
+			<p class='hover_categories' style='position:absolute;top:74%;left:75%;width:30%;'>Tops</p>
+			<p class='hover_categories' style='position:absolute;top:78%;left:75%;width:30%;'>TShirts</p>
+			<p class='hover_categories' style='position:absolute;top:82%;left:75%;width:30%;'>Dresses</p>
+			<p class='hover_categories' style='position:absolute;top:86%;left:75%;width:30%;'>Party wear</p>
+		</div>
+	</div>
+	
+	<form action='/reload_hmpg_aft_login/' id='reload_hmpg_aft_login' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		
+	</form>
+	<h3 style='left:0%;position:absolute;top:13%'>Delivery Address:</h3>
+	<div id='address_display_1' value='1' style='left:13%;position:absolute;top:16%'>
+	<select id='sel_addrss' name='sel_addrss'>
+		<option> Select an Address from Below or add a new Address in profile</option>
+		<option >{{add_1}}</option>
+		<option >{{add_2}}</option>
+		<option >{{add_3}}</option>
+		<option >{{add_4}}</option>
+		<option >{{add_5}}</option>
+		<option >{{add_6}}</option>
+	</select>
+	</div>
+	<h4> Review and click on Checkout with out updating any items or go to shopping cart to update:</h4>
+	
+	<form action='/pay_page/' id='pay_page' method='post'>
+	{% csrf_token %}
+	<div id='cart_itms' style='margin: 20px;padding: 40px;border-radius: 7px;background-color:white;width:40%;left:10%;position:absolute;top:30%'>
+		{% load static %}
+		<img name='img1' id='img1' src='{% static "Men/Top_Wear/Tshirts/MnTshirt150620221.PNG" %}' style='position:absolute;top:2%;height:90%;width:20%;right:70%;'></img>
+		<h4 name='item_name1' id='item_name1' value='item_name1' style='position:absolute;top:0.3%;left:35%;'>{{item_name1}}</h4><br>
+		<select id='size_1' name='size_1' style='position:absolute;top:37%;width:10%;left:33%'>
+			<optgroup label="Size">
+			<option value='XS' style='position:absolute;'>XS</option>
+			<option value='S' style='position:absolute;'>S</option>
+			<option value='M' style='position:absolute;'>M</option>
+			<option value='L' style='position:absolute;'>L</option>
+			<option value='XL' style='position:absolute;'>XL</option>
+			</optgroup>
+		</select>
+		<!--<option id='crt1' name='size1' value='size1' style='position:absolute;'>XS</option>
+			<option id='crt1' name='size2' value='size2' style='position:absolute;'>S</option>
+			<option id='crt1' name='size3' value='size3' style='position:absolute;'>M</option>
+			<option id='crt1' name='size4' value='size4' style='position:absolute;'>L</option>
+			<option id='crt1' name='size5' value='size5' style='position:absolute;'>XL</option>-->
+		<input type='text' name='qnty1' id='qnty1' style='position:absolute;top:37%;width:10%;left:50%;cursor:pointer;background-color:pink;text-align:center;' value='-' onclick='decrement(id);' readonly></input>
+		<input type='text' name='q1' id='q1' style='position:absolute;top:37%;width:10%;left:60%' value='{{q1}}' readonly></input>
+		<input type='text' name='qa1' id='qa1' style='position:absolute;top:37%;width:10%;left:70%;cursor:pointer;background-color:orange;text-align:center;' value='+' onclick='increment(id);' readonly></input>
+		<!--<input type='text' style='visibility:hidden' name='price1' id='price1' >12</input>-->
+		<h3 style='position:absolute;top:50%;right:62%;' name='price1' id='price1'>{{price1}}</h3><br>
+		<h5 name='delivery1' id='delivery1' style='position:absolute;top:70%;right:50%;'>{{deliver1}}</h5><br>
+		
+	</div>
+	<div id='cart_add_div'>
+		{% load static %}
+		<div id='cart_add_div_1' style='width:40%;position:absolute;left:10.8%;'>
+		</div>
+	</div>
+	<!--
+		<select id='size_0' name='size_0' style='position:absolute;top:37%;width:10%;left:33%'>
+			<optgroup label="Size">
+			</optgroup>
+		</select>-->
+	<textarea rows='100' cols='60' id='t1' style="position:absolute;top:1%;visibility:hidden;">{{item_name_str}}</textarea>
+	<textarea rows='100' cols='60' id='t2' style="position:absolute;top:1%;visibility:hidden;">{{img_cart_paths}}</textarea>
+	<textarea rows='100' cols='60' id='t3' style="position:absolute;top:1%;visibility:hidden;">{{price_str}}</textarea>
+	<textarea rows='100' cols='60' id='t4' style="position:absolute;top:1%;visibility:hidden;">{{qnt_str}}</textarea>
+	<textarea rows='100' cols='60' id='t5' style="position:absolute;top:1%;visibility:hidden;">{{del_str}}</textarea>
+	<textarea rows='100' cols='60' id='t6' style="position:absolute;top:1%;visibility:hidden;">{{q_pr_str}}</textarea>
+	<textarea rows='100' cols='60' id='t7' style="position:absolute;top:1%;visibility:hidden;">{{size_select}}</textarea>
+	
+	
+	<div id='price_det' name='price_det' style='margin: 20px;padding: 40px;border-radius: 7px;background-color:lightgrey;width:23%;right:3%;top:20%;height:70%;position:absolute'>
+		<h3>Price Details:</h3>
+		<h3 name='price_det_name1' id='price_det_name1'>{{item_name1}}</h3>
+		<h4 name='price_det_qty1' id='price_det_qty1' style='position:absolute;top:15.5%;left:60%;'>{{q1}}</h4>
+		<h4 name='into' id='into' style='position:absolute;top:15.5%;left:65%;'>*</h4>
+		<h4 name='price_det_price1' id='price_det_price1' style='position:absolute;top:15.5%;left:70%;'>{{price1}}</h4>
+		<h4 name='eq' id='eq' style='position:absolute;top:15.5%;left:80%;'>=</h4>
+		<h4 name='price_det_tot1' id='price_det_tot1' style='position:absolute;top:15.5%;left:85%;'>{{q_price1}}</h4>
+		<div id='itemnm1'></div>
+		<div id='qat1'></div>
+		<div id='prce1'></div>
+		<div id='prc_tot1'></div>
+		
+		<h3>Tax & other Fee</h3>
+		<h4 name='price_det_tax1' id='price_det_tax1' style='position:absolute;top:23.5%;left:85%;'>{{tax_tot}}</h4>
+		
+		<hr>
+		
+		<h3 name='lab_tot' id='lab_tot' style='position:absolute;'>Total ($):</h3>
+		<h4 name='price_det1' id='price_det1' style='position:absolute;top:35.5%;left:85%;'>{{tot_p}}</h4>
+		
+	</div>
+	<input type="text" style="visibility:hidden;top:1%;position:absolute;background-color:red;left:20%;" name="tot_cart_ord" id="tot_cart_ord"
+	value="{{tot_cart_ord}}"</input>
+	<input type="text" style="visibility:hidden;top:1%;position:absolute;" name='type_save_chckout' id='type_save_chckout'></input>
+	<input type="text" style="visibility:hidden;top:1%;position:absolute;" name='all_data' id='all_data'></input>
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	</form>
+	
+	<button class='button' id='save1' onclick='save_the_cart();' style='visibility:hidden;color:white;border-radius: 12px;background-color:cherry;right:15%;position:absolute;top:35%'>Save</button>
+	<button class='button' id='chcout1' onclick='checkout_cart();' style='color:white;border-radius: 12px;background-color:orange;right:5%;position:absolute;top:35%'>CheckOut</button>
+	
+	<script>
+		function reload_homepage(){
+			document.getElementById('reload_hmpg_aft_login').submit();
+		}
+		
+		var text_ar1=(document.getElementById("t1").value).split(',');
+		var text_ar2=(document.getElementById("t2").value).split(',');
+		var text_ar3=(document.getElementById("t3").value).split(',');
+		var text_ar4=(document.getElementById("t4").value).split(',');
+		var text_ar5=(document.getElementById("t5").value).split(',');
+		var text_ar6=(document.getElementById("t6").value).split(',');
+		var text_ar7=(document.getElementById("t7").value).split(',');
+		document.getElementById('size_1').value=text_ar7[0];
+		document.getElementById('chcout1').style.top='65%';
+		document.getElementById('img1').src=text_ar2[0];
+		function increment(id){
+			var thenum = id.replace( /^\D+/g, '');
+			var tot1=document.getElementById('tot_cart_ord').value;
+			var i=1;
+			var qntt=parseInt(document.getElementById('q'+thenum).value)+1;
+			var pr6=document.getElementById('price'+thenum).innerText;
+			pr6=pr6.replace('$','');
+			var price1=parseFloat(pr6);
+			document.getElementById('q'+thenum).value=qntt;
+			document.getElementById('price_det_qty'+thenum).innerHTML=qntt;
+			var prod=(price1*qntt).toFixed(2);
+			console.log('price_det_qty'+prod)
+			//var present_val=parseFloat(document.getElementById('price_det1').innerText);
+			document.getElementById('price_det_tot'+thenum).innerHTML=prod;
+			var Total_now=0;
+			var pr5=''
+			while(i<=tot1){
+				pr5=document.getElementById('price'+i.toString()).innerText;
+				pr5=pr5.replace('$','');
+				prod=parseFloat((document.getElementById('q'+i.toString()).value)*parseFloat(pr5));
+				Total_now=Total_now+prod;
+				i=i+1;
+			}
+			var Tax=0;
+			Tax=(0.2*Total_now).toFixed(2);
+			Total_now=(parseFloat(Total_now)+parseFloat(Tax)).toFixed(2);
+			//console.log(Tax);
+			document.getElementById('price_det1').innerText=Total_now;
+			document.getElementById('price_det_tax1').innerHTML=Tax;
+			
+		}
+		function decrement(id){
+			var thenum = id.replace( /^\D+/g, '');
+			var tot1=document.getElementById('tot_cart_ord').value;
+			var i=1;
+			var qntt=parseInt(document.getElementById('q'+thenum).value)-1;
+			if(qntt>=0){
+				var pr6=(document.getElementById('price'+thenum).innerText);
+				pr6=pr6.replace('$','');
+				var price1=pr6;
+				document.getElementById('q'+thenum).value=qntt;
+				document.getElementById('price_det_qty'+thenum).innerHTML=qntt;
+				var prod=(price1*qntt).toFixed(2);
+				//console.log('price_det_qty'+prod)
+				//var present_val=parseFloat(document.getElementById('price_det1').innerText);
+				document.getElementById('price_det_tot'+thenum).innerHTML=prod;
+				var Total_now=0;
+				while(i<=tot1){
+					pr5=document.getElementById('price'+i.toString()).innerText;
+					pr5=pr5.replace('$','');
+					prod=parseFloat((document.getElementById('q'+i.toString()).value)*(pr5));
+					Total_now=Total_now+prod;
+					i=i+1;
+				}
+				var Tax=0;
+				Tax=(0.2*Total_now).toFixed(2);
+				Total_now=(parseFloat(Total_now)+parseFloat(Tax)).toFixed(2);
+				document.getElementById('price_det1').innerText=Total_now;
+				document.getElementById('price_det_tax1').innerHTML=Tax;
+			}
+		}
+		var tot=document.getElementById('tot_cart_ord').value;	
+		if(tot.toString()==''){
+			console.log(tot);
+			tot=parseInt(0);
+		}
+		var i=2;
+		var j=30;
+		var img_top=15;
+		var str=""
+		document.getElementById('cart_add_div_1').style.top='53%';
+		document.getElementById('cart_add_div').style.top='65%';
+		while(i<=tot){
+			j=j+25;
+			img_top=j-50;
+			const elem = document.getElementById('cart_add_div_1');
+			const elem1 = document.getElementById('img1');
+			const elem2 = document.getElementById('item_name1');
+			const elem3 = document.getElementById('size_1');
+			const elem4 = document.getElementById('size1');
+			const elem5 = document.getElementById('size2');
+			const elem6 = document.getElementById('size3');
+			const elem7 = document.getElementById('size4');
+			const elem8 = document.getElementById('size5');
+			const elem9 = document.getElementById('qnty1');
+			const elem10 = document.getElementById('q1');
+			const elem11 = document.getElementById('qa1');
+			const elem12 = document.getElementById('price1');
+			const elem13 = document.getElementById('delivery1');
+			const clone = elem.cloneNode(true);
+			const clone1 = elem1.cloneNode(true);
+			const clone2 = elem2.cloneNode(true);
+			const clone3 = elem3.cloneNode(true);
+			//const clone4 = elem4.cloneNode(true);
+			//const clone5 = elem5.cloneNode(true);
+			//const clone6 = elem6.cloneNode(true);
+			//const clone7 = elem7.cloneNode(true);
+			//const clone8 = elem8.cloneNode(true);
+			const clone9 = elem9.cloneNode(true);
+			const clone10 = elem10.cloneNode(true);
+			const clone11 = elem11.cloneNode(true);
+			const clone12 = elem12.cloneNode(true);
+			const clone13 = elem13.cloneNode(true);
+			
+			clone.id='cart_add_div_'+i.toString();
+			clone1.id='img'+i.toString();
+			clone2.id='item_name'+i.toString();
+			clone3.id='size_'+i.toString();
+			clone9.id='qnty'+i.toString();
+			clone10.id='q'+i.toString();
+			clone11.id='qa'+(i).toString();
+			clone12.id='price'+i.toString();
+			clone13.id='delivery'+i.toString();
+			
+			document.getElementById("cart_add_div").appendChild(clone);
+			document.getElementById(clone.id).appendChild(clone1);
+			document.getElementById(clone.id).appendChild(clone2);
+			document.getElementById(clone.id).appendChild(clone3);
+			document.getElementById(clone.id).appendChild(clone9);
+			document.getElementById(clone.id).appendChild(clone10);
+			document.getElementById(clone.id).appendChild(clone11);
+			document.getElementById(clone.id).appendChild(clone12);
+			document.getElementById(clone.id).appendChild(clone13);
+			
+			//document.getElementById(clone.id).style.border-radius="7px";
+			//document.getElementById(clone.id).style.background-color="lightgrey";
+			document.getElementById(clone.id).style.top=j+"%";
+			document.getElementById(clone1.id).style.top=img_top+"%";
+			document.getElementById(clone1.id).style.left="9%";
+			document.getElementById(clone1.id).style.height="95%";
+			document.getElementById(clone3.id).style.top=(j-20)+"%";
+			document.getElementById(clone2.id).style.top=(j-80)+"%";
+			document.getElementById(clone9.id).style.top=(j-30)+"%";
+			document.getElementById(clone10.id).style.top=(j-30)+"%";
+			document.getElementById(clone11.id).style.top=(j-30)+"%";
+			document.getElementById(clone12.id).style.top=(j-10)+"%";
+			document.getElementById(clone13.id).style.top=(j+20)+"%";
+			document.getElementById(clone.id).style.margin="10px";
+			document.getElementById(clone.id).style.padding="40px";
+			
+			document.getElementById('item_name'+i.toString()).innerHTML=text_ar1[i-1];
+			document.getElementById('q'+i.toString()).value=text_ar4[i-1];
+			document.getElementById('price'+i.toString()).innerHTML=text_ar3[i-1];
+			document.getElementById('delivery'+i.toString()).innerHTML=text_ar5[i-1];
+			document.getElementById(clone1.id).src=text_ar2[i-1];
+			
+			document.getElementById('size_'+i.toString()).value=text_ar7[i-1];
+			
+			i=i+1;
+		}
+		i=2;
+		var top1=15.5;
+		while(i<=tot){
+			top1=top1+8;
+			console.log('price');
+			const elem = document.getElementById('price_det_name1');
+			const elem1 = document.getElementById('price_det_qty1');
+			const elem2 = document.getElementById('price_det_price1');
+			const elem3 = document.getElementById('price_det_tot1');
+			const clone = elem.cloneNode(true);
+			const clone1 = elem1.cloneNode(true);
+			const clone2 = elem2.cloneNode(true);
+			const clone3 = elem3.cloneNode(true);
+			
+			clone.id='price_det_name'+i.toString();
+			clone1.id='price_det_qty'+i.toString();
+			clone2.id='price_det_price'+i.toString();
+			clone3.id='price_det_tot'+i.toString();
+			
+			document.getElementById("itemnm1").appendChild(clone);
+			document.getElementById('qat1').appendChild(clone1);
+			document.getElementById('prce1').appendChild(clone2);
+			document.getElementById('prc_tot1').appendChild(clone3);
+			
+			document.getElementById(clone.id).innerHTML=text_ar1[i-1];
+			document.getElementById(clone1.id).innerHTML=text_ar4[i-1];
+			document.getElementById(clone2.id).innerHTML=text_ar3[i-1];
+			document.getElementById(clone3.id).innerHTML=text_ar6[i-1];
+			
+			document.getElementById(clone.id).style.top=top1+'%';
+			document.getElementById(clone1.id).style.top=top1+'%';
+			document.getElementById(clone2.id).style.top=top1+'%';
+			document.getElementById(clone3.id).style.top=top1+'%';
+			//document.getElementById(clone1.id).innerHTML='1';
+			document.getElementById('price_det1').style.top=(top1+15)+'%';
+			document.getElementById('price_det_tax1').style.top=(top1+10)+'%';
+			document.getElementById('lab_tot').style.top=(top1+15)+'%';
+			document.getElementById('chcout1').style.top=(top1+45)+'%';
+			document.getElementById('save1').style.top=(top1+45)+'%';
+			
+			i=i+1;
+		}
+		if(parseInt(tot)<1){
+			var obj= document.getElementById("cart_itms");
+			var obj2= document.getElementById("price_det");
+			var obj3= document.getElementById("img1");
+			var obj4= document.getElementById("size_1");
+			var obj5= document.getElementById("qnty1");
+			var obj6= document.getElementById("q1");
+			var obj7= document.getElementById("qa1");
+			obj.remove();
+			obj2.remove();
+			obj3.remove();
+			obj4.remove();
+			obj5.remove();
+			obj6.remove();
+			obj7.remove();
+			document.getElementById('chcout1').style.visibility='hidden';
+		}
+		function save_the_cart(){
+			document.getElementById('type_save_chckout').value='Save';
+			var tot=document.getElementById('tot_cart_ord').value;
+			var i=0;
+			var item_name_v;
+			var size_v;
+			var imgv;
+			var qv;
+			var deliveryv;
+			var pricev;
+			var tot_data='';
+			for(i=0;i<tot;i++){
+				tot_data=tot_data+'('
+				item_name_v=document.getElementById('item_name'+(i+1).toString()).innerText;
+				size_v=document.getElementById('size_'+(i+1).toString()).value;
+				imgv=document.getElementById('img'+(i+1).toString()).src;
+				qv=document.getElementById('q'+(i+1).toString()).value;
+				deliveryv=document.getElementById('delivery'+(i+1).toString()).innerText;
+				pricev=document.getElementById('price'+(i+1).toString()).innerText;
+				tot_data=tot_data+item_name_v+','+size_v+','+imgv+','+qv+','+deliveryv+','+pricev
+			}
+			document.getElementById('all_data').value=tot_data;
+			document.getElementById('save_cart_checkout').submit();
+		}
+		function checkout_cart(){
+			document.getElementById('pay_page').submit();
+		}
+	</script>
+	
+	</body>
+</html>
+
+	

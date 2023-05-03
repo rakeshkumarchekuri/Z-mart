@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			eShopping
+		</title>
+		
+		<!--<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>-->
+		
+	</head>
+	<body>
+	
+	<style>
+		.grow {
+			height: 6%;
+			right:10%;
+			width: 10%;
+			top:0%;
+			position: absolute;
+			text-align: left;
+			overflow: hidden;
+			transition: 0.2s;
+		}
+		.grow:hover {
+			height: 35%;
+			width: 15%;
+		}
+		.right-hover:hover{
+			color: grey;
+		}
+		.categories_hover{
+			position:absolute;
+			left:22%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_hover:hover{
+			top:14%;
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.categories_women_hover{
+			position:absolute;
+			left:29%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_women_hover:hover{
+			top:14%;
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.categories_kids_hover{
+			position:absolute;
+			left:38%;
+			top:4%;
+			height:10%;
+			overflow: hidden;
+		}
+		.categories_kids_hover:hover{
+			top:14%;
+			background-color:white;
+			height: 75%;
+			width: 40%;
+			border-style: solid;
+			border-width:1px;
+			border-radius: 7px;
+		}
+		.hover_categories:hover{
+			color:black;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		.products_view{
+			width:20%;
+			height:40%;
+			border-radius:10px;
+			border-color:black;
+			background-color:red;
+			position:absolute;
+		}
+		.button {
+			background-color: #4CAF50; /* Green */
+			border: none;
+			color: green;
+			padding: 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+		}
+		
+		.button:hover {background-color: #3e8e41}
+		
+		.button:active {
+			background-color: #3e8e41;
+			box-shadow: 0 5px #666;
+			transform: translateY(4px);
+		}
+	</style>
+	<div onclick='reload_homepage();' style='cursor:pointer;'>
+		<h3 style='font-style:italic;color:red;'>eShopping</h3>
+		<p style='font-size:10px;top:5%;position:absolute;color:orange;'>Fashion Store </p>
+	</div>
+	
+	
+	
+	
+	<div class='grow'>
+	<form action='/Logout/' method='post'>
+		{% csrf_token %}
+		<b><p>{{user_name}}</p></b>
+		<br>
+		<button class='right-hover' style='font:20;width:60%;height:40%;border-color:white;cursor:pointer;'>Logout</button>
+	</form>
+		<form action='/Address/' method='post' >
+		{% csrf_token %}
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Saved Addresses</button>
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	</form>
+	<!--
+	<form action='/open_cart/' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		<button class='right-hover' style='font:20;width:60%;height:12%;border-color:white;cursor:pointer;'>Shopping Cart</button>
+	</form>
+	-->
+	
+	</div>
+	<br>
+	<hr>
+	
+	<br>
+	
+	
+	
+	
+	<form action='/reload_hmpg_aft_login/' id='reload_hmpg_aft_login' method='post'>
+		{% csrf_token %}
+		<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+		
+	</form>
+<!--	<h3 style='left:0%;position:absolute;top:13%'>Delivery Address:</h3>
+	<div id='address_display_1' value='1' style='left:13%;position:absolute;top:16%'>
+	<select id='sel_addrss' name='sel_addrss'>
+		<option> Select an Address from Below or add a new Address in profile</option>
+		<option >{{add_1}}</option>
+		<option >{{add_2}}</option>
+		<option >{{add_3}}</option>
+		<option >{{add_4}}</option>
+		<option >{{add_5}}</option>
+		<option >{{add_6}}</option>
+	</select>
+	</div>--><br>
+	<h2> Previous and Current Orders:</h2>
+	
+	<form action='/save_cart_checkout/' id='save_cart_checkout' method='post'>
+	{% csrf_token %}
+	<div id='cart_itms' style='margin: 20px;padding: 40px;border-radius: 7px;background-color:white;width:40%;left:10%;position:absolute;top:30%'>
+		{% load static %}
+		<img name='img1' id='img1' src='{% static "Men/Top_Wear/Tshirts/MnTshirt150620221.PNG" %}' style='position:absolute;top:2%;height:90%;width:20%;right:70%;'></img>
+		<h4 name='item_name1' id='item_name1' value='item_name1' style='position:absolute;top:0.3%;left:35%;'>{{item_name1}}</h4><br>
+		
+		<!--<option id='crt1' name='size1' value='size1' style='position:absolute;'>XS</option>
+			<option id='crt1' name='size2' value='size2' style='position:absolute;'>S</option>
+			<option id='crt1' name='size3' value='size3' style='position:absolute;'>M</option>
+			<option id='crt1' name='size4' value='size4' style='position:absolute;'>L</option>
+			<option id='crt1' name='size5' value='size5' style='position:absolute;'>XL</option>-->
+		<input type='text' name='size1' id='size1' style='position:absolute;top:37%;width:10%;left:35%;cursor:pointer;background-color:pink;text-align:center;' value='{{size1}}'  readonly></input>
+		<input type='text' name='q1' id='q1' style='position:absolute;top:37%;width:10%;left:45%' value='{{q1}}' readonly></input>
+		<input type='text' name='stat1' id='stat1' style='position:absolute;top:37%;width:20%;left:55%;cursor:pointer;background-color:orange;text-align:center;' value='{{status1}}' readonly></input>
+		<textarea name='feed1' id='feed1' rows='7' cols='15' style='position:absolute;top:37%;width:30%;left:80%;cursor:auto;text-align:center;' value='{{feedback}}' placeholder='Feedback'></textarea>
+		<!--<input type='text' style='visibility:hidden' name='price1' id='price1' >12</input>-->
+		<h3 style='position:absolute;top:50%;right:62%;' name='price1' id='price1'>{{price1}}</h3><br>
+		<h5 name='delivery1' id='delivery1' style='position:absolute;top:70%;right:50%;'>{{deliver1}}</h5><br>
+		<input type='text' id='chck_max1' name='chck_max1' style='visibility:hidden' value='{{chck_max1}}'></input>
+	</div>
+	<div id='cart_add_div'>
+		{% load static %}
+		<div id='cart_add_div_1' style='width:40%;position:absolute;left:10.8%;'>
+		</div>
+	</div>
+	<!--
+		<select id='size_0' name='size_0' style='position:absolute;top:37%;width:10%;left:33%'>
+			<optgroup label="Size">
+			</optgroup>
+		</select>-->
+	<textarea rows='100' cols='60' id='t1' style="position:absolute;top:1%;visibility:hidden;">{{item_name_str}}</textarea>
+	<textarea rows='100' cols='60' id='t2' style="position:absolute;top:1%;visibility:hidden;">{{img_cart_paths}}</textarea>
+	<textarea rows='100' cols='60' id='t3' style="position:absolute;top:1%;visibility:hidden;">{{price_str}}</textarea>
+	<textarea rows='100' cols='60' id='t4' style="position:absolute;top:1%;visibility:hidden;">{{qnt_str}}</textarea>
+	<textarea rows='100' cols='60' id='t5' style="position:absolute;top:1%;visibility:hidden;">{{del_str}}</textarea>
+	<textarea rows='100' cols='60' id='t6' style="position:absolute;top:1%;visibility:hidden;">{{q_pr_str}}</textarea>
+	<textarea rows='100' cols='60' id='t7' style="position:absolute;top:1%;visibility:hidden;">{{size_str}}</textarea>
+	<textarea rows='100' cols='60' id='t8' style="position:absolute;top:1%;visibility:hidden;">{{stat_str}}</textarea>
+	
+	<div id='price_det' name='price_det' style='margin: 20px;padding: 40px;border-radius: 7px;background-color:lightgrey;width:23%;right:3%;top:20%;height:70%;position:absolute'>
+		<h3>User Query:</h3>
+		<hr>
+		
+		<textarea name='txt_ar1' id='txt_ar1' style='position:absolute;' rows='8' cols='40' placeholder='Please write your Query here!'></textarea>
+		
+	</div>
+	<input type="text" style="visibility:hidden;top:1%;position:absolute;background-color:red;left:20%;" name="tot_cart_ord" id="tot_cart_ord"
+	value="{{tot_cart_ord}}"</input>
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	</form>
+	<form action='/Query_Form/' id='Query_Form' method='post'>
+	{% csrf_token %}
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_qry1' id='user_qry1'></input>
+	<input type='text' style='border-radius: 12px;right:17%;position:absolute;top:65%;cursor:pointer' onclick='sub_qry_form();' value='Submit Query' readonly></input>
+	
+	</form>
+	
+	<form action='/Feedback_Form/' id='Feedback_Form' method='post'>
+	{% csrf_token %}
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_name1' value={{user_name}}></input>
+	<input type="text" style="visibility: hidden;top:1%;position:absolute;" name='user_feed1' id='user_feed1'></input>
+	<input type='text' style='border-radius: 12px;right:17%;position:absolute;top:75%;cursor:pointer' onclick='sub_feed_form();' value='Submit Feedback' readonly></input>
+	
+	</form>
+	
+	<script>
+		function reload_homepage(){
+			document.getElementById('reload_hmpg_aft_login').submit();
+		}
+		function sub_feed_form(){
+			var tot=document.getElementById('tot_cart_ord').value;	
+			var i;
+			var dt_str='';
+			for(i=1;i<=tot;i++){
+				var imgsrc=document.getElementById('img'+i.toString()).src;
+				var feed_str=document.getElementById('feed'+i.toString()).value;
+				dt_str=dt_str+imgsrc+'-'+feed_str+')'
+			}
+			document.getElementById('user_feed1').value=dt_str;
+			document.getElementById('Feedback_Form').submit();
+		}
+		function sub_qry_form(){
+			console.log(document.getElementById('txt_ar1').value);
+			document.getElementById('user_qry1').value=document.getElementById('txt_ar1').value;
+			document.getElementById('Query_Form').submit();
+		}
+		var text_ar1=(document.getElementById("t1").value).split(',');
+		var text_ar2=(document.getElementById("t2").value).split(',');
+		var text_ar3=(document.getElementById("t3").value).split(',');
+		var text_ar4=(document.getElementById("t4").value).split(',');
+		var text_ar5=(document.getElementById("t5").value).split(',');
+		var text_ar6=(document.getElementById("t6").value).split(',');
+		var text_ar7=(document.getElementById("t7").value).split(',');
+		var text_ar8=(document.getElementById("t8").value).split(',');
+		
+		document.getElementById('img1').src=text_ar2[0];
+		
+		var tot=document.getElementById('tot_cart_ord').value;	
+		if(tot.toString()==''){
+			console.log(tot);
+			tot=parseInt(0);
+		}
+		var i=2;
+		var j=30;
+		var img_top=15;
+		var str=""
+		document.getElementById('cart_add_div_1').style.top='53%';
+		document.getElementById('cart_add_div').style.top='65%';
+		while(i<=tot){
+			j=j+30;
+			img_top=j-50;
+			const elem = document.getElementById('cart_add_div_1');
+			const elem1 = document.getElementById('img1');
+			const elem2 = document.getElementById('item_name1');
+			const elem9 = document.getElementById('size1');
+			const elem10 = document.getElementById('q1');
+			const elem11 = document.getElementById('stat1');
+			const elem12 = document.getElementById('price1');
+			const elem13 = document.getElementById('delivery1');
+			const elem14 = document.getElementById('feed1')
+			const clone = elem.cloneNode(true);
+			const clone1 = elem1.cloneNode(true);
+			const clone2 = elem2.cloneNode(true);
+			//const clone4 = elem4.cloneNode(true);
+			//const clone5 = elem5.cloneNode(true);
+			//const clone6 = elem6.cloneNode(true);
+			//const clone7 = elem7.cloneNode(true);
+			//const clone8 = elem8.cloneNode(true);
+			const clone9 = elem9.cloneNode(true);
+			const clone10 = elem10.cloneNode(true);
+			const clone11 = elem11.cloneNode(true);
+			const clone12 = elem12.cloneNode(true);
+			const clone13 = elem13.cloneNode(true);
+			const clone14 = elem14.cloneNode(true);
+			
+			
+			clone.id='cart_add_div_'+i.toString();
+			clone1.id='img'+i.toString();
+			clone2.id='item_name'+i.toString();
+			clone9.id='size'+i.toString();
+			clone10.id='q'+i.toString();
+			clone11.id='status'+(i).toString();
+			clone12.id='price'+i.toString();
+			clone13.id='delivery'+i.toString();
+			clone14.id='feed'+i.toString();
+			clone14.name='feed'+i.toString();
+			
+			document.getElementById("cart_add_div").appendChild(clone);
+			document.getElementById(clone.id).appendChild(clone1);
+			document.getElementById(clone.id).appendChild(clone2);
+			
+			document.getElementById(clone.id).appendChild(clone9);
+			document.getElementById(clone.id).appendChild(clone10);
+			document.getElementById(clone.id).appendChild(clone11);
+			document.getElementById(clone.id).appendChild(clone14);
+			document.getElementById(clone.id).appendChild(clone12);
+			document.getElementById(clone.id).appendChild(clone13);
+			
+			//document.getElementById(clone.id).style.border-radius="7px";
+			//document.getElementById(clone.id).style.background-color="lightgrey";
+			document.getElementById(clone.id).style.top=j+"%";
+			document.getElementById(clone1.id).style.top=img_top+"%";
+			document.getElementById(clone1.id).style.left="9%";
+			document.getElementById(clone1.id).style.height="95%";
+			
+			document.getElementById(clone2.id).style.top=(j-80)+"%";
+			document.getElementById(clone9.id).style.top=(j-30)+"%";
+			document.getElementById(clone10.id).style.top=(j-30)+"%";
+			document.getElementById(clone11.id).style.top=(j-30)+"%";
+			document.getElementById(clone14.id).style.top=(j-30)+"%";
+			document.getElementById(clone12.id).style.top=(j-10)+"%";
+			document.getElementById(clone13.id).style.top=(j+20)+"%";
+			document.getElementById(clone.id).style.margin="10px";
+			document.getElementById(clone.id).style.padding="40px";
+			
+			document.getElementById('item_name'+i.toString()).innerHTML=text_ar1[i-1];
+			document.getElementById('q'+i.toString()).value=text_ar4[i-1];
+			document.getElementById('price'+i.toString()).innerHTML=text_ar3[i-1];
+			document.getElementById('delivery'+i.toString()).innerHTML=text_ar5[i-1];
+			document.getElementById(clone1.id).src=text_ar2[i-1];
+			document.getElementById(clone9.id).value=text_ar7[i-1];
+			document.getElementById(clone11.id).value=text_ar8[i-1];
+			
+			i=i+1;
+		}
+		
+		
+
+	</script>
+	
+	</body>
+</html>
+
+	
